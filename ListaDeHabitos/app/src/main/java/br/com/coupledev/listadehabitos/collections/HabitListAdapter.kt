@@ -9,7 +9,8 @@ import br.com.coupledev.listadehabitos.databinding.HabitItemBinding
 
 class HabitListAdapter : RecyclerView.Adapter<HabitListAdapter.HabitViewHolder>() {
 
-    private val asyncListDiffer: AsyncListDiffer<HabitItem> = AsyncListDiffer(this, DiffCallback)
+    private val asyncListDiffer: AsyncListDiffer<HabitItem> =
+        AsyncListDiffer(this, DiffCallback)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HabitViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -32,6 +33,7 @@ class HabitListAdapter : RecyclerView.Adapter<HabitListAdapter.HabitViewHolder>(
 
         fun bind(habit: HabitItem) {
             binding.titleTextView.text = habit.title
+            binding.subTitleTextView.text = habit.subTitle
             binding.completeCheckBox.isChecked = habit.isCompleted
         }
     }

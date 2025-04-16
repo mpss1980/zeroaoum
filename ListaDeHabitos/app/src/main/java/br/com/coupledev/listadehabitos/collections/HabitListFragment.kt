@@ -1,5 +1,6 @@
 package br.com.coupledev.listadehabitos.collections
 
+import HabitListItemDecoration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -40,6 +41,7 @@ class HabitListFragment : Fragment() {
         binding.habitRecyclerView.adapter = adapter
 
         addingDividerDecoration()
+        addingDividerSpace()
         adapter.updateHabits(MockHabits.habitItemList)
     }
 
@@ -58,5 +60,9 @@ class HabitListFragment : Fragment() {
         divider.dividerColor = ContextCompat.getColor(requireContext(), R.color.primary_200)
 
         binding.habitRecyclerView.addItemDecoration(divider)
+    }
+
+    private fun addingDividerSpace() {
+        binding.habitRecyclerView.addItemDecoration(HabitListItemDecoration(requireContext()))
     }
 }
