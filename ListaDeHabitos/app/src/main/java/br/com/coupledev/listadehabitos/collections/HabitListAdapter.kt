@@ -7,7 +7,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import br.com.coupledev.listadehabitos.databinding.HabitItemBinding
 
-class HabitListAdapter : RecyclerView.Adapter<HabitListAdapter.HabitViewHolder>() {
+class HabitListAdapter(private val viewModel: HabitListViewModel) :
+    RecyclerView.Adapter<HabitListAdapter.HabitViewHolder>() {
 
     private val asyncListDiffer: AsyncListDiffer<HabitItem> =
         AsyncListDiffer(this, DiffCallback)
@@ -15,7 +16,7 @@ class HabitListAdapter : RecyclerView.Adapter<HabitListAdapter.HabitViewHolder>(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HabitViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = HabitItemBinding.inflate(layoutInflater, parent, false)
-        return HabitViewHolder(binding)
+        return HabitViewHolder(binding, viewModel)
     }
 
     override fun getItemCount(): Int = asyncListDiffer.currentList.size
@@ -28,13 +29,29 @@ class HabitListAdapter : RecyclerView.Adapter<HabitListAdapter.HabitViewHolder>(
         asyncListDiffer.submitList(habits)
     }
 
-    class HabitViewHolder(private val binding: HabitItemBinding) :
+    class HabitViewHolder(
+        private val binding: HabitItemBinding,
+        private val viewModel: HabitListViewModel
+    ) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(habit: HabitItem) {
             binding.titleTextView.text = habit.title
             binding.subTitleTextView.text = habit.subTitle
             binding.completeCheckBox.isChecked = habit.isCompleted
+
+            val textColor =
+                if (habit.isCompleted)
+                    binding.root.context.getColor(android.R.color.darker_gray)
+                else
+                    binding.root.context.getColor(android.R.color.black)
+
+            binding.titleTextView.setTextColor(textColor)
+            binding.subTitleTextView.setTextColor(textColor)
+
+            binding.completeCheckBox.setOnClickListener {
+                viewModel.toggleHabitCompleted(habit.id)
+            }
         }
     }
 
