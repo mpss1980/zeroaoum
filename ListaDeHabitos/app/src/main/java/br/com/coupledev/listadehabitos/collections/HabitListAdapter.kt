@@ -37,7 +37,6 @@ class HabitListAdapter(private val viewModel: HabitListViewModel) :
 
         fun bind(habit: HabitItem) {
             binding.titleTextView.text = habit.title
-            binding.subTitleTextView.text = habit.subTitle
             binding.completeCheckBox.isChecked = habit.isCompleted
 
             val textColor =
@@ -47,7 +46,6 @@ class HabitListAdapter(private val viewModel: HabitListViewModel) :
                     binding.root.context.getColor(android.R.color.black)
 
             binding.titleTextView.setTextColor(textColor)
-            binding.subTitleTextView.setTextColor(textColor)
 
             binding.completeCheckBox.setOnClickListener {
                 viewModel.toggleHabitCompleted(habit.id)

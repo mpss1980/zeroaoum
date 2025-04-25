@@ -22,9 +22,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
-    private val viewModel: HabitListViewModel by viewModels {
-        HabitListViewModel.Factory(MockHabits)
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,10 +33,6 @@ class MainActivity : AppCompatActivity() {
         setupNavigation()
 
         supportActionBar?.title = getString(R.string.title_habit_list)
-
-        binding.fab.setOnClickListener {
-            viewModel.addRandomHabit()
-        }
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())

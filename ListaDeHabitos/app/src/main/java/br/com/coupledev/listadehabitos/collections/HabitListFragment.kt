@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.coupledev.listadehabitos.R
 import br.com.coupledev.listadehabitos.databinding.FragmentHabitListBinding
@@ -51,6 +52,10 @@ class HabitListFragment : Fragment() {
             .observe(viewLifecycleOwner) { state ->
                 bindState(state)
             }
+
+        binding.fab.setOnClickListener {
+            findNavController().navigate(R.id.action_habitList_to_habitForm)
+        }
     }
 
     override fun onDestroy() {

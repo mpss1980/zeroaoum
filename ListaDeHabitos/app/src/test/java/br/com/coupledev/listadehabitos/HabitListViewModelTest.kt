@@ -1,6 +1,7 @@
 package br.com.coupledev.listadehabitos
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import br.com.coupledev.listadehabitos.collections.HabitItem
 import br.com.coupledev.listadehabitos.collections.HabitListViewModel
 import org.junit.Before
 import org.junit.Rule
@@ -22,7 +23,9 @@ class HabitListViewModelTest {
     @Test
     fun `Verify if uiState is init with data`() {
         // Prepare
-        repository.addRandomHabit()
+        repository.addHabit(
+            "Name", listOf(1, 2, 3)
+        )
 
         // Execute
         val uiState = viewModel.stateOnceAndStream().getOrAwaitValue()
@@ -34,7 +37,9 @@ class HabitListViewModelTest {
     @Test
     fun `Verify if uiState is updated when habit is toggled`() {
         // Prepare
-        repository.addRandomHabit()
+        repository.addHabit(
+            "Name", listOf(1, 2, 3)
+        )
         val firstHabit = repository.habitList.first()
         val firstHabitId = firstHabit.id
         val isFirstHabitCompleted = firstHabit.isCompleted
