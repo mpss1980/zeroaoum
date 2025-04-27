@@ -1,7 +1,6 @@
 package br.com.coupledev.listadehabitos
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import br.com.coupledev.listadehabitos.collections.HabitItem
 import br.com.coupledev.listadehabitos.collections.HabitListViewModel
 import org.junit.Before
 import org.junit.Rule

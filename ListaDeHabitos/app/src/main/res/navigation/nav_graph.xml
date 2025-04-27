@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/habitListFragment"
         android:name="br.com.coupledev.listadehabitos.collections.HabitListFragment"
-        android:label="fragment_habit_list"
+        android:label="@string/title_habit_list"
         tools:layout="@layout/fragment_habit_list">
         <action
             android:id="@+id/action_habitList_to_habitForm"

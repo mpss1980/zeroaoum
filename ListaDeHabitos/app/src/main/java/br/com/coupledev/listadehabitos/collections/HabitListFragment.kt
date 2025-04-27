@@ -11,8 +11,11 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.coupledev.listadehabitos.R
+import br.com.coupledev.listadehabitos.collections.domain.GetHabitForTodayUseCaseImpl
+import br.com.coupledev.listadehabitos.collections.domain.ToggleProgressUseCaseImpl
+import br.com.coupledev.listadehabitos.core.repository.HabitRepositoryImpl
+import br.com.coupledev.listadehabitos.core.repository.ProgressRepositoryImpl
 import br.com.coupledev.listadehabitos.databinding.FragmentHabitListBinding
-import br.com.coupledev.listadehabitos.dummy.MockHabits
 import com.google.android.material.divider.MaterialDividerItemDecoration
 
 class HabitListFragment : Fragment() {
@@ -23,11 +26,21 @@ class HabitListFragment : Fragment() {
     private lateinit var adapter: HabitListAdapter
 
     private val viewModel: HabitListViewModel by activityViewModels {
-        HabitListViewModel.Factory(MockHabits)
+        val habitRepository = HabitRepositoryImpl
+        val progressRepository = ProgressRepositoryImpl
+        val getHabitForTodayUseCase = GetHabitForTodayUseCaseImpl(
+            habitRepository = habitRepository,
+            progressRepository = progressRepository,
+        )
+        HabitListViewModel.Factory(
+            toggleProgressUseCase = ToggleProgressUseCaseImpl(progressRepository),
+            getHabitForTodayUseCase = getHabitForTodayUseCase
+        )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        lifecycle.addObserver(HabitListLifecycleObserver(viewModel))
         adapter = HabitListAdapter(viewModel)
     }
 

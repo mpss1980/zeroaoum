@@ -12,10 +12,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
-import br.com.coupledev.listadehabitos.collections.HabitListViewModel
 import br.com.coupledev.listadehabitos.databinding.ActivityMainBinding
-import br.com.coupledev.listadehabitos.dummy.MockHabits
-import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
 

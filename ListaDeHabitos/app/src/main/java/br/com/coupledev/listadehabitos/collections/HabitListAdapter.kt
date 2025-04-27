@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import br.com.coupledev.listadehabitos.collections.model.HabitItem
 import br.com.coupledev.listadehabitos.databinding.HabitItemBinding
 
 class HabitListAdapter(private val viewModel: HabitListViewModel) :
@@ -38,14 +39,6 @@ class HabitListAdapter(private val viewModel: HabitListViewModel) :
         fun bind(habit: HabitItem) {
             binding.titleTextView.text = habit.title
             binding.completeCheckBox.isChecked = habit.isCompleted
-
-            val textColor =
-                if (habit.isCompleted)
-                    binding.root.context.getColor(android.R.color.darker_gray)
-                else
-                    binding.root.context.getColor(android.R.color.black)
-
-            binding.titleTextView.setTextColor(textColor)
 
             binding.completeCheckBox.setOnClickListener {
                 viewModel.toggleHabitCompleted(habit.id)

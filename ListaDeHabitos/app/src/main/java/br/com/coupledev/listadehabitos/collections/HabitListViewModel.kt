@@ -4,35 +4,48 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import br.com.coupledev.listadehabitos.core.HabitRepository
+import androidx.lifecycle.viewModelScope
+import br.com.coupledev.listadehabitos.collections.domain.GetHabitForTodayUseCase
+import br.com.coupledev.listadehabitos.collections.domain.ToggleProgressUseCase
+import kotlinx.coroutines.launch
 
-class HabitListViewModel(private val repository: HabitRepository) : ViewModel() {
+class HabitListViewModel(
+    private val toggleProgressUseCase: ToggleProgressUseCase,
+    private val getHabitForTodayUseCase: GetHabitForTodayUseCase,
+) : ViewModel() {
     private val state: MutableLiveData<HabitListState> by lazy {
-        MutableLiveData<HabitListState>(HabitListState(habitItemList = repository.fetchHabits()))
+        MutableLiveData<HabitListState>(HabitListState(habitItemList = emptyList()))
+    }
+
+    fun onResume() {
+        viewModelScope.launch {
+            refreshHabitList()
+        }
     }
 
     fun stateOnceAndStream(): LiveData<HabitListState> = state
 
-    fun addHabit(name: String, selectedHabitDays: List<Int>) {
-        repository.addHabit(name, selectedHabitDays)
-        refreshState()
-    }
-
-    fun toggleHabitCompleted(id: String) {
-        repository.toggleHabitCompleted(id)
-        refreshState()
-    }
-
-    private fun refreshState() {
-        state.value?.let { currentState ->
-            state.value = currentState.copy(habitItemList = repository.fetchHabits())
+    fun toggleHabitCompleted(habitId: String) {
+        viewModelScope.launch {
+            toggleProgressUseCase(habitId)
+            refreshHabitList()
         }
     }
 
-    class Factory(private val repository: HabitRepository) : ViewModelProvider.Factory {
-        @Suppress("UNCHECKED_CAST")
+    private suspend fun refreshHabitList() {
+        state.postValue(HabitListState(getHabitForTodayUseCase()))
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    class Factory(
+        private val toggleProgressUseCase: ToggleProgressUseCase,
+        private val getHabitForTodayUseCase: GetHabitForTodayUseCase,
+    ) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return HabitListViewModel(repository) as T
+            return HabitListViewModel(
+                toggleProgressUseCase,
+                getHabitForTodayUseCase
+            ) as T
         }
     }
 }

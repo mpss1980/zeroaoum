@@ -1,7 +1,6 @@
 package br.com.coupledev.listadehabitos
 
-import br.com.coupledev.listadehabitos.collections.HabitItem
-import br.com.coupledev.listadehabitos.core.HabitRepository
+import br.com.coupledev.listadehabitos.collections.model.HabitItem
 import java.util.UUID
 
 class TestHabitRepository : HabitRepository {

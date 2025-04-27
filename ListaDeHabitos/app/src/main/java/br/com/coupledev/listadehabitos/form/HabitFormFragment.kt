@@ -7,11 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.navigateUp
-import br.com.coupledev.listadehabitos.collections.HabitListViewModel
+import br.com.coupledev.listadehabitos.core.repository.HabitRepositoryImpl
 import br.com.coupledev.listadehabitos.databinding.FragmentHabitFormBinding
-import br.com.coupledev.listadehabitos.databinding.FragmentHabitListBinding
-import br.com.coupledev.listadehabitos.dummy.MockHabits
+import com.google.android.material.chip.Chip
 
 class HabitFormFragment : Fragment() {
 
@@ -19,8 +17,8 @@ class HabitFormFragment : Fragment() {
 
     private val binding get() = _binding!!
 
-    private val viewModel: HabitListViewModel by activityViewModels {
-        HabitListViewModel.Factory(MockHabits)
+    private val viewModel: HabitFormViewModel by activityViewModels {
+        HabitFormViewModel.Factory(HabitRepositoryImpl)
     }
 
     override fun onCreateView(
@@ -44,7 +42,14 @@ class HabitFormFragment : Fragment() {
 
     private fun onSave() {
         val habitName = binding.titleTextInput.editText?.text.toString()
-        val selectedHabitDays = binding.daysChipGroup.checkedChipIds
+
+        val selectedHabitDays = mutableListOf<Int>()
+        for (id in binding.daysChipGroup.checkedChipIds) {
+            val chip = binding.daysChipGroup.findViewById<Chip>(id)
+            val position = binding.daysChipGroup.indexOfChild(chip)
+            selectedHabitDays.add(position + 1)
+        }
+
         viewModel.addHabit(habitName, selectedHabitDays)
         findNavController().navigateUp()
     }
