@@ -1,26 +1,30 @@
 package br.com.coupledev.listadehabitos.core.repository
 
+import br.com.coupledev.listadehabitos.core.database.AppDatabase
+import br.com.coupledev.listadehabitos.core.database.entity.Habit
 import br.com.coupledev.listadehabitos.core.model.HabitDomain
 import java.util.UUID
 
-object HabitRepositoryImpl : HabitRepository  {
+class HabitRepositoryImpl(appDatabase: AppDatabase) : HabitRepository {
 
-    private val habitListCache: MutableList<HabitDomain> = mutableListOf()
-
-    override suspend fun fetchAll(): List<HabitDomain> = habitListCache
+    private val dao = appDatabase.habitDao()
 
     override suspend fun fetchByDayOfWeek(dayOfWeek: Int): List<HabitDomain> {
-        return habitListCache.filter {
-            it.daysOfWeek.contains(dayOfWeek)
+        return dao.fetchByDayOfWeek(dayOfWeek).map {
+            HabitDomain(
+                id = it.id,
+                title = it.title,
+                daysOfWeek = it.daysOfWeek
+            )
         }
     }
 
     override suspend fun add(title: String, daysOfWeek: List<Int>) {
-       val habit = HabitDomain(
-           id = UUID.randomUUID().toString(),
-           title = title,
-           daysOfWeek = daysOfWeek
-       )
-        habitListCache.add(habit)
+        val habit = Habit(
+            id = UUID.randomUUID().toString(),
+            title = title,
+            daysOfWeek = daysOfWeek
+        )
+        dao.insert(habit = habit)
     }
 }

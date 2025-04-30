@@ -13,10 +13,14 @@ constraintlayout = "2.1.4"
 navigationUiKtx = "2.8.9"
 navigationFragment = "2.8.9"
 leanback = "1.0.0"
+roomKtx = "2.7.1"
+kapt = "2.1.20"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-core-testing = { module = "androidx.arch.core:core-testing", version.ref = "coreTesting" }
+androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomKtx" }
+androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -30,5 +34,6 @@ androidx-leanback = { group = "androidx.leanback", name = "leanback", version.re
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-android = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
+kapt = { id = "org.jetbrains.kotlin.android", version.ref = "kapt" }
 

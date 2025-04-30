@@ -1,32 +1,38 @@
 package br.com.coupledev.listadehabitos.core.repository
 
+import br.com.coupledev.listadehabitos.core.database.AppDatabase
+import br.com.coupledev.listadehabitos.core.database.entity.Progress
 import br.com.coupledev.listadehabitos.core.model.ProgressDomain
 import java.util.Calendar
 import java.util.UUID
 
-object ProgressRepositoryImpl : ProgressRepository {
+class ProgressRepositoryImpl(appDatabase: AppDatabase) : ProgressRepository {
 
-    private val progressListCache: MutableList<ProgressDomain> = mutableListOf()
+    private val dao = appDatabase.progressDao()
 
     override suspend fun fetch(habitId: String, completedAt: Long): List<ProgressDomain> {
         val calendar = Calendar.getInstance()
-        calendar.timeInMillis = completedAt
-        return progressListCache.filter {
-            it.habitId == habitId && it.dayOfWith == calendar.get(Calendar.DAY_OF_WEEK)
+        return dao.fetchByHabitId(habitId, completedAt).map { progress ->
+            calendar.timeInMillis = progress.completedAt
+            ProgressDomain(
+                id = progress.uuid,
+                habitId = progress.habitId,
+                dayOfWith = calendar.get(Calendar.DAY_OF_WEEK)
+            )
         }
     }
 
     override suspend fun add(habitId: String) {
-        val dayOfWeek = Calendar.getInstance().get(Calendar.DAY_OF_WEEK)
-        val progress = ProgressDomain(
-            id = UUID.randomUUID().toString(),
+        val dayOfWeek = Calendar.getInstance()
+        val progress = Progress(
+            uuid = UUID.randomUUID().toString(),
             habitId = habitId,
-            dayOfWith = dayOfWeek
+            completedAt = dayOfWeek.timeInMillis
         )
-        progressListCache.add(progress)
+        dao.insert(progress)
     }
 
     override suspend fun delete(habitId: String) {
-        progressListCache.removeAll { it.id == habitId }
+        dao.delete(habitId)
     }
 }

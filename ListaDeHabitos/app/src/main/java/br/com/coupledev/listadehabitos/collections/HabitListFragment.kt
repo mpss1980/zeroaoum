@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.coupledev.listadehabitos.R
 import br.com.coupledev.listadehabitos.collections.domain.GetHabitForTodayUseCaseImpl
 import br.com.coupledev.listadehabitos.collections.domain.ToggleProgressUseCaseImpl
+import br.com.coupledev.listadehabitos.core.database.AppDatabase
 import br.com.coupledev.listadehabitos.core.repository.HabitRepositoryImpl
 import br.com.coupledev.listadehabitos.core.repository.ProgressRepositoryImpl
 import br.com.coupledev.listadehabitos.databinding.FragmentHabitListBinding
@@ -26,8 +27,9 @@ class HabitListFragment : Fragment() {
     private lateinit var adapter: HabitListAdapter
 
     private val viewModel: HabitListViewModel by activityViewModels {
-        val habitRepository = HabitRepositoryImpl
-        val progressRepository = ProgressRepositoryImpl
+        val db = AppDatabase.getInstance(requireContext())
+        val habitRepository = HabitRepositoryImpl(db)
+        val progressRepository = ProgressRepositoryImpl(db)
         val getHabitForTodayUseCase = GetHabitForTodayUseCaseImpl(
             habitRepository = habitRepository,
             progressRepository = progressRepository,

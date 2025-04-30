@@ -10,6 +10,7 @@ class ToggleProgressUseCaseImpl(
         val today = Calendar.getInstance()
         val progress = progressRepository.fetch(habitId, today.timeInMillis)
 
+        //todo: não está deletando a progress corretamente
         if (progress.isNotEmpty()) {
             progressRepository.delete(habitId)
         } else {
