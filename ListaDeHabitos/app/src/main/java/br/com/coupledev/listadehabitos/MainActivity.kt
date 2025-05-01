@@ -1,6 +1,8 @@
 package br.com.coupledev.listadehabitos
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -50,5 +52,21 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration) ||
                 return super.onSupportNavigateUp()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.actionSettings -> {
+            val navController = findNavController(R.id.nav_host_fragment_content_main)
+            navController.navigate(R.id.action_habitListFragment_to_settingsFragment)
+            true
+        }
+        else -> {
+            super.onOptionsItemSelected(item)
+        }
     }
 }

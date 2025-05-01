@@ -1,6 +1,7 @@
 [versions]
 agp = "8.8.1"
 coreTesting = "2.2.0"
+datastorePreferences = "1.0.0"
 kotlin = "1.9.24"
 coreKtx = "1.10.1"
 junit = "4.13.2"
@@ -13,12 +14,15 @@ constraintlayout = "2.1.4"
 navigationUiKtx = "2.8.9"
 navigationFragment = "2.8.9"
 leanback = "1.0.0"
+preferenceKtx = "1.2.0"
 roomKtx = "2.7.1"
 kapt = "2.1.20"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-core-testing = { module = "androidx.arch.core:core-testing", version.ref = "coreTesting" }
+androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
+androidx-preference-ktx = { module = "androidx.preference:preference-ktx", version.ref = "preferenceKtx" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomKtx" }
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }

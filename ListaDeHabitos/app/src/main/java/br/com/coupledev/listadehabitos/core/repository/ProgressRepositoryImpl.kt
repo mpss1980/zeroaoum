@@ -32,7 +32,7 @@ class ProgressRepositoryImpl(appDatabase: AppDatabase) : ProgressRepository {
         dao.insert(progress)
     }
 
-    override suspend fun delete(habitId: String) {
-        dao.delete(habitId)
+    override suspend fun delete(id: String) {
+        dao.delete(id)
     }
 }

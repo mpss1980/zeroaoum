@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId = "br.com.coupledev.listadehabitos"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
@@ -49,6 +49,8 @@ dependencies {
     implementation(libs.androidx.navigation.fragment)
     implementation(libs.androidx.leanback)
     implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.datastore.preferences)
+    implementation(libs.androidx.preference.ktx)
 
     //noinspection KaptUsageInsteadOfKsp
     kapt(libs.androidx.room.compiler)

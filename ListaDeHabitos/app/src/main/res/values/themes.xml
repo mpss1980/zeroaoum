@@ -14,7 +14,8 @@
         <!-- Customize your theme here. -->
         <item name="colorSurface">@color/white</item>
         <item name="colorOnSurfaceVariant">@color/primary_800</item>
-        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.App.MediumComponent</item>
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.App.MediumComponent
+        </item>
         <item name="colorOutline">@color/primary_400</item>
 
         <item name="floatingActionButtonStyle">@style/Widget.App.FloatingActionButton</item>

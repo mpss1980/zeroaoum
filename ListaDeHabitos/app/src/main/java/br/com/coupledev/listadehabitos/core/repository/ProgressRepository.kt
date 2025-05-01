@@ -8,5 +8,5 @@ interface ProgressRepository {
 
     suspend fun add(habitId: String)
 
-    suspend fun delete(habitId: String)
+    suspend fun delete(id: String)
 }
