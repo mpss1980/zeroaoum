@@ -4,8 +4,9 @@ import br.com.coupledev.listadehabitos.collections.model.HabitItem
 import br.com.coupledev.listadehabitos.core.repository.HabitRepository
 import br.com.coupledev.listadehabitos.core.repository.ProgressRepository
 import java.util.Calendar
+import javax.inject.Inject
 
-class GetHabitForTodayUseCaseImpl(
+class GetHabitForTodayUseCaseImpl @Inject constructor(
     private val habitRepository: HabitRepository,
     private val progressRepository: ProgressRepository
 ) : GetHabitForTodayUseCase {

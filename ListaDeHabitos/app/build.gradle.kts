@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kapt)
+    alias(libs.plugins.dagger.hilt)
 }
 
 android {
@@ -34,7 +35,7 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
-   buildFeatures {
+    buildFeatures {
         viewBinding = true
     }
 }
@@ -48,16 +49,28 @@ dependencies {
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.androidx.navigation.fragment)
     implementation(libs.androidx.leanback)
+
+    //room
     implementation(libs.androidx.room.ktx)
+
+    //datastore
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.androidx.preference.ktx)
 
     //noinspection KaptUsageInsteadOfKsp
     kapt(libs.androidx.room.compiler)
 
+    //dagger hilt
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.android.compiler)
+
     testImplementation(libs.androidx.core.testing)
     testImplementation(libs.junit)
 
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+}
+
+kapt {
+    correctErrorTypes = true
 }

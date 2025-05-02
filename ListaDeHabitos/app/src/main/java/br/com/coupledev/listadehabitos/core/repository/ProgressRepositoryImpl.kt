@@ -1,14 +1,15 @@
 package br.com.coupledev.listadehabitos.core.repository
 
-import br.com.coupledev.listadehabitos.core.database.AppDatabase
+import br.com.coupledev.listadehabitos.core.database.dao.ProgressDao
 import br.com.coupledev.listadehabitos.core.database.entity.Progress
 import br.com.coupledev.listadehabitos.core.model.ProgressDomain
 import java.util.Calendar
 import java.util.UUID
+import javax.inject.Inject
 
-class ProgressRepositoryImpl(appDatabase: AppDatabase) : ProgressRepository {
-
-    private val dao = appDatabase.progressDao()
+class ProgressRepositoryImpl @Inject constructor(
+    private val dao: ProgressDao
+) : ProgressRepository {
 
     override suspend fun fetch(habitId: String, completedAt: Long): List<ProgressDomain> {
         val calendar = Calendar.getInstance()

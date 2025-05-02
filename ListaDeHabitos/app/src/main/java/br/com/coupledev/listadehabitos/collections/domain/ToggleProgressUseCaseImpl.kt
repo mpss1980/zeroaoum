@@ -2,8 +2,9 @@ package br.com.coupledev.listadehabitos.collections.domain
 
 import br.com.coupledev.listadehabitos.core.repository.ProgressRepository
 import java.util.Calendar
+import javax.inject.Inject
 
-class ToggleProgressUseCaseImpl(
+class ToggleProgressUseCaseImpl @Inject constructor(
     private val progressRepository: ProgressRepository,
 ) : ToggleProgressUseCase {
     override suspend fun invoke(habitId: String) {

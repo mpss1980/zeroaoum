@@ -1,13 +1,14 @@
 package br.com.coupledev.listadehabitos.core.repository
 
-import br.com.coupledev.listadehabitos.core.database.AppDatabase
+import br.com.coupledev.listadehabitos.core.database.dao.HabitDao
 import br.com.coupledev.listadehabitos.core.database.entity.Habit
 import br.com.coupledev.listadehabitos.core.model.HabitDomain
 import java.util.UUID
+import javax.inject.Inject
 
-class HabitRepositoryImpl(appDatabase: AppDatabase) : HabitRepository {
-
-    private val dao = appDatabase.habitDao()
+class HabitRepositoryImpl @Inject constructor(
+    private val dao: HabitDao
+) : HabitRepository {
 
     override suspend fun fetchByDayOfWeek(dayOfWeek: Int): List<HabitDomain> {
         return dao.fetchByDayOfWeek(dayOfWeek).map {
